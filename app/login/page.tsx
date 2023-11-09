@@ -26,7 +26,7 @@ export default function Login({
       return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/");
+    return redirect("/dashboard");
   };
 
   const signUp = async (formData: FormData) => {
@@ -109,14 +109,13 @@ export default function Login({
           Sign Up
         </button>
 
-        <br />
-        <GoogleAuth />
-
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
             {searchParams.message}
           </p>
         )}
+        <br />
+        <GoogleAuth />
       </form>
     </div>
   );

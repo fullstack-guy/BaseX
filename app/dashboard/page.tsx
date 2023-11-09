@@ -1,5 +1,5 @@
+import Layout from "../containers/Layout";
 import Dashboard from "@/components/Dashboard";
-import Layout from "./containers/Layout";
 
 const Index = () => {
   return (
