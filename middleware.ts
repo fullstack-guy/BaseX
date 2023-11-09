@@ -9,9 +9,27 @@ export async function middleware(request: NextRequest) {
 
     // Refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-session-with-middleware
-    await supabase.auth.getSession()
+    const {data: { session },} = await supabase.auth.getSession()
 
-    return response
+    // Check auth condition
+    if (session) {
+      const redirectUrl = request.nextUrl.clone();
+      //console.log("handle", session.user.user_metadata.handle )
+      // if(!session.user.user_metadata.handle && redirectUrl.pathname != '/dashboard/account'){
+        
+      //   // console.log(redirectUrl.pathname)
+      //   redirectUrl.pathname = '/dashboard/account'
+      //   return NextResponse.redirect(redirectUrl)
+      // }
+      // Authentication successful, forward request to protected route.
+      return response
+    }
+      // Auth condition not met, redirect to home page.
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = '/login'
+    redirectUrl.searchParams.set(`redirectedFrom`, request.nextUrl.pathname)
+    return NextResponse.redirect(redirectUrl)
+
   } catch (e) {
     // If you are here, a Supabase client could not be created!
     // This is likely because you have not set up environment variables.
@@ -22,4 +40,7 @@ export async function middleware(request: NextRequest) {
       },
     })
   }
+}
+export const config = {
+  matcher: ['/about/:path*', '/dashboard/:path*','/account', '/ship/:path*']
 }
