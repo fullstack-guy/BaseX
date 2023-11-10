@@ -1,46 +1,27 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { createClient } from '@/utils/supabase/middleware'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 
-export async function middleware(request: NextRequest) {
-  try {
-    // This `try/catch` block is only here for the interactive tutorial.
-    // Feel free to remove once you have Supabase connected.
-    const { supabase, response } = createClient(request)
+export async function middleware(req: NextRequest) {
 
-    // Refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-session-with-middleware
-    const {data: { session },} = await supabase.auth.getSession()
+  const res = NextResponse.next()
+  const supabase = createMiddlewareClient({ req, res })
 
-    // Check auth condition
-    if (session) {
-      const redirectUrl = request.nextUrl.clone();
-      //console.log("handle", session.user.user_metadata.handle )
-      // if(!session.user.user_metadata.handle && redirectUrl.pathname != '/dashboard/account'){
-        
-      //   // console.log(redirectUrl.pathname)
-      //   redirectUrl.pathname = '/dashboard/account'
-      //   return NextResponse.redirect(redirectUrl)
-      // }
-      // Authentication successful, forward request to protected route.
-      return response
-    }
-      // Auth condition not met, redirect to home page.
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/login'
-    redirectUrl.searchParams.set(`redirectedFrom`, request.nextUrl.pathname)
-    return NextResponse.redirect(redirectUrl)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
-    return NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    })
+  // if user is signed in and the current path is / redirect the user to /account
+  if (user && req.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/dashboard', req.url))
   }
+
+  // if user is not signed in and the current path is not / redirect the user to /
+  if (!user && req.nextUrl.pathname !== '/') {
+    return NextResponse.redirect(new URL('/login', req.url))
+  }
+
+  return res
 }
 export const config = {
-  matcher: ['/about/:path*', '/dashboard/:path*','/account', '/ship/:path*']
+  matcher: ['/about/:path*', '/dashboard/:path*', '/account', '/ship/:path*']
 }
