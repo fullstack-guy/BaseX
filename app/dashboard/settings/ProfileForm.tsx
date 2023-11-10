@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Session } from "@supabase/supabase-js";
 import classNames from "classnames";
 
@@ -13,6 +12,7 @@ import FormTextArea from "@/components/FormTextArea";
 import { INITIAL_USER_DATA, UserInterface } from "@/app/types/user";
 import { INITIAL_ORG_DATA, OrgInterface } from "@/app/types/organization";
 import { supabaseStorageUrl } from "@/utils/constants";
+import { createClient } from "@/utils/supabase/client";
 
 interface ProfileFormData {
   name: string;
@@ -50,7 +50,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
   const [orgData, setOrgData] = useState<OrgInterface>(INITIAL_ORG_DATA);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const getUserData = useCallback(async () => {
     const { data: user } = await supabase
