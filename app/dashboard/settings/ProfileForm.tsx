@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Session } from "@supabase/supabase-js";
 import classNames from "classnames";
 
@@ -13,6 +12,7 @@ import FormTextArea from "@/components/FormTextArea";
 import { INITIAL_USER_DATA, UserInterface } from "@/app/types/user";
 import { INITIAL_ORG_DATA, OrgInterface } from "@/app/types/organization";
 import { supabaseStorageUrl } from "@/utils/constants";
+import { createClient } from "@/utils/supabase/client";
 
 interface ProfileFormData {
   name: string;
@@ -50,7 +50,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
   const [orgData, setOrgData] = useState<OrgInterface>(INITIAL_ORG_DATA);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const getUserData = useCallback(async () => {
     const { data: user } = await supabase
@@ -213,6 +213,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
         }
 
         setIsSaving(false);
+        getOrgData();
       } catch (error) {
         setIsSaving(false);
       }
@@ -283,6 +284,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
               title="Username"
               placeholder="Enter username"
               error={errors.username?.message}
+              required
             />
           </section>
           <section className="mb-4">
@@ -337,6 +339,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
               title="Handle"
               placeholder="Enter handle here"
               error={errors.orgHandle?.message}
+              required
             />
           </section>
           <section className="flex flex-col md:flex-row justify-between mb-4">
