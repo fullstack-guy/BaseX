@@ -213,6 +213,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
         }
 
         setIsSaving(false);
+        getOrgData();
       } catch (error) {
         setIsSaving(false);
       }
