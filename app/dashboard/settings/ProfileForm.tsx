@@ -231,7 +231,9 @@ const ProfileForm = ({ session }: SettingsInterface) => {
     <div className="w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="pb-5">
-          <h3 className="block text-black font-bold mb-2">Profile Data</h3>
+          <h3 className="block text-black font-bold mb-2 text-3xl">
+            Profile Data
+          </h3>
           <section className="flex flex-col md:flex-row justify-between mb-4">
             <div className="w-full md:w-[50%]">
               <span className="block text-secondary font-semibold mb-2">
@@ -298,7 +300,14 @@ const ProfileForm = ({ session }: SettingsInterface) => {
         </div>
         <hr className="h-2" />
         <div className="pb-5">
-          <h3 className="block text-black font-bold mb-2">Organization Data</h3>
+          <h3 className="block text-black font-bold mb-2 text-3xl">
+            Organization Data
+          </h3>
+          <p className=" text-lg text-black">
+            {orgData.id
+              ? "You can update your organization data here"
+              : "Please create a new organization here"}
+          </p>
           <section className="mb-4">
             <FormLine
               id="orgName"
