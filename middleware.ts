@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     const { supabase, response } = createClient(request)
 
     // Refresh session if expired - required for Server Components
-    const {data: { session },} = await supabase.auth.getSession()
+    const { data: { session }, } = await supabase.auth.getSession()
 
     // Check auth condition
     if (session) {
@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
       // Authentication successful, forward request to protected route.
       return response
     }
-      // Auth condition not met, redirect to login page.
+    // Auth condition not met, redirect to login page.
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/login'
     redirectUrl.searchParams.set(`redirectedFrom`, request.nextUrl.pathname)
@@ -32,5 +32,5 @@ export async function middleware(request: NextRequest) {
   }
 }
 export const config = {
-  matcher: ['/about/:path*', '/dashboard/:path*','/account', '/ship/:path*']
+  matcher: ['/about/:path*', '/dashboard/:path*', '/account', '/ship/:path*']
 }
