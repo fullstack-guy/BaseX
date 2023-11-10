@@ -283,6 +283,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
               title="Username"
               placeholder="Enter username"
               error={errors.username?.message}
+              required
             />
           </section>
           <section className="mb-4">
@@ -337,6 +338,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
               title="Handle"
               placeholder="Enter handle here"
               error={errors.orgHandle?.message}
+              required
             />
           </section>
           <section className="flex flex-col md:flex-row justify-between mb-4">

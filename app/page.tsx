@@ -1,13 +1,20 @@
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 import DeployButton from "../components/DeployButton";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/SignUpUserSteps";
 import Header from "@/components/Header";
-import { cookies } from "next/headers";
 
 export default async function Index() {
   const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const canInitSupabaseClient = () => {
     // This function is just for the interactive tutorial.
@@ -21,6 +28,19 @@ export default async function Index() {
   };
 
   const isSupabaseConnected = canInitSupabaseClient();
+
+  if (user?.id) {
+    let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
+      u_id: user.id,
+    });
+
+    if (error) console.error(error);
+    else {
+      if (!data) {
+        return redirect("/dashboard/settings");
+      }
+    }
+  }
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
