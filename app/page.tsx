@@ -1,12 +1,14 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-import DeployButton from "../components/DeployButton";
+import Brand from "../components/Brand";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/SignUpUserSteps";
+import Hero from "@/components/Hero";
+import { Head } from "next/document";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default async function Index() {
   const cookieStore = cookies();
@@ -16,62 +18,32 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient(cookieStore);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isSupabaseConnected = canInitSupabaseClient();
-
-  if (user?.id) {
-    let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
-      u_id: user.id,
-    });
-
-    if (error) console.error(error);
-    else {
-      if (!data) {
-        return redirect("/dashboard/settings");
-      }
-    }
-  }
-
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
+      <Header user={user} />
 
       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-        <Header />
+        <Hero />
         <main className="flex-1 flex flex-col gap-6">
           <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
+          <ConnectSupabaseSteps />
         </main>
       </div>
 
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <p>
-          Powered by{" "}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
+
+// user_metadata: {
+//   avatar_url: 'https://lh3.googleusercontent.com/a/ACg8ocJVoepOXjg2M4XAlCthjkNobZ2R8qZR4tymyWAiK7mkAEE=s96-c',
+//   custom_claims: { hd: 'sonicloop.net' },
+//   email: 'tennyson@sonicloop.net',
+//   email_verified: true,
+//   full_name: 'Tennyson Preston',
+//   iss: 'https://accounts.google.com',
+//   name: 'Tennyson Preston',
+//   picture: 'https://lh3.googleusercontent.com/a/ACg8ocJVoepOXjg2M4XAlCthjkNobZ2R8qZR4tymyWAiK7mkAEE=s96-c',
+//   provider_id: '100371691896886518380',
+//   sub: '100371691896886518380'
+// },

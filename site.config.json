@@ -1,0 +1,5 @@
+{
+    "name": "basex",
+    "logo": "/logo.png",
+    "target": "es5"
+}

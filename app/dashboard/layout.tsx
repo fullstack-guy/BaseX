@@ -1,32 +1,42 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import Header from "@/components/Header";
+import Header from "@/components/Hero";
 import AuthButton from "@/components/AuthButton";
+import Brand from "@/components/Brand";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
 
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient(cookieStore);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  const supabase = createClient(cookieStore);
 
-  const isSupabaseConnected = canInitSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user?.id) {
+    let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
+      u_id: user.id,
+    });
+
+    if (error) console.error(error);
+    else {
+      if (!data) {
+        return redirect("/dashboard/settings");
+      }
+    }
+  }
+
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          {isSupabaseConnected && <AuthButton />}
+          <Brand />
+          <AuthButton />
         </div>
       </nav>
 
