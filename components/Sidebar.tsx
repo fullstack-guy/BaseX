@@ -1,5 +1,4 @@
 "use client";
-// import "../globals.css";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Brand from "@/components/Brand";
@@ -10,20 +9,20 @@ import {
   LuLayoutList,
   LuMenu,
   LuX,
-  LuUserSquare2,
-  LuHome,
+  LuUser2,
   LuBell,
 } from "react-icons/lu";
+import { PiHouseSimpleBold } from "react-icons/pi";
 import Search from "@/components/Search";
 
 const navigation = [
   {
     name: "Dashboard Home",
     href: "/dashboard",
-    icon: LuHome,
+    icon: PiHouseSimpleBold,
     current: true,
   },
-  { name: "Passes", href: "#", icon: LuUserSquare2, current: false },
+  { name: "Passes", href: "#", icon: LuUser2, current: false },
   { name: "Visits", href: "#", icon: LuLayoutList, current: false },
 ];
 
@@ -46,6 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <>
       <div>
@@ -101,7 +101,7 @@ export default function RootLayout({
                       </button>
                     </div>
                   </Transition.Child>
-                  {/* Sidebar component, swap this element with another sidebar if you like */}
+                  {/* Sidebar component */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
                     <div className="flex h-16 shrink-0 items-center">
                       <Brand />
@@ -184,6 +184,11 @@ export default function RootLayout({
                             Account Settings
                           </a>
                         </li>
+                        <li>
+                          <div className="-mx-2 gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700">
+                            {children}
+                          </div>
+                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -195,7 +200,7 @@ export default function RootLayout({
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-60 lg:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
+          {/* Sidebar component */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
             <div className="flex h-16 shrink-0 items-center">
               <Brand />
@@ -267,16 +272,19 @@ export default function RootLayout({
                 <li className="-mx-6 mt-auto p-2">
                   <a
                     href="/dashboard/settings"
-                    className="flex items-center gap-x-3 p-2 rounded-md justify-between text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
+                    className="flex items-center gap-x-3 p-2 mb-3 rounded-md text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
                   >
-                    <div className="flex items-center gap-x-4">
-                      Account Settings
-                    </div>
                     <LuSettings
                       className="h-5 w-5 shrink-0 text-gray-400 group-hover:text-accent"
                       aria-hidden="true"
                     />
+                    <div className="flex items-center gap-x-4">
+                      Account Settings
+                    </div>
                   </a>
+                  <div className="gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-900">
+                    {children}
+                  </div>
                 </li>
               </ul>
             </nav>
@@ -284,6 +292,7 @@ export default function RootLayout({
         </div>
 
         <div className="sticky top-0 z-40 flex items-center justify-between gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+          <Brand />
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -292,14 +301,6 @@ export default function RootLayout({
             <span className="sr-only">Open sidebar</span>
             <LuMenu className="h-6 w-6" aria-hidden="true" />
           </button>
-          <a href="/dashboard/account">
-            <span className="sr-only">Your profile</span>
-            <img
-              className="h-8 w-8 rounded-full bg-gray-50"
-              src="/images/avatar.jpg"
-              alt=""
-            />
-          </a>
         </div>
       </div>
     </>
