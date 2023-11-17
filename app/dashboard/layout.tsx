@@ -36,18 +36,18 @@ export default async function RootLayout({
 
   // const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // if (user?.id) {
-  //   let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
-  //     u_id: user.id,
-  //   });
+  if (user?.id) {
+    let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
+      u_id: user.id,
+    });
 
-  //   if (error) console.error(error);
-  //   else {
-  //     if (!data) {
-  //       return redirect("/dashboard/settings");
-  //     }
-  //   }
-  // }
+    if (error) console.error(error);
+    else {
+      if (!data) {
+        return redirect("/dashboard/settings");
+      }
+    }
+  }
 
   return (
     <>
