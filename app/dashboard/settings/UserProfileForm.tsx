@@ -231,8 +231,8 @@ const ProfileForm = ({ session }: SettingsInterface) => {
   return (
     <div className="max-w-3xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className="pb-5">
-          heading
+        <div className="pb-5">
+          {/* heading */}
           <div className="pb-12">
             <h1 className="font-bold">User Profile</h1>
             <p className="text-gray-400 mt-2">
@@ -262,7 +262,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
                     />
                   )}
                 </div>
-                Profile Image input
+                {/* Profile Image input */}
                 <input
                   title="image"
                   type="file"
@@ -305,21 +305,23 @@ const ProfileForm = ({ session }: SettingsInterface) => {
               />
             </section>
           </div>
-        </div> */}
+        </div>
 
-        <div className="bg-white rounded-lg shadow pt-6 pb-3 px-8 mb-6">
-          <h1 className="font-bold">Account Settings</h1>
+        {/* <div className="bg-white rounded-lg shadow pt-6 pb-3 px-8 mb-6">
           <div className="pb-5">
-            <p className="text-gray-400 mt-2">
+            <h3 className="block text-black font-bold mb-2 text-3xl">
+              Organization Data
+            </h3>
+            <p className=" text-lg text-black">
               {orgData.id
-                ? "View and update your account details, profile, and more."
-                : "Please create a new profile here"}
+                ? "You can update your organization data here"
+                : "Please create a new organization here"}
             </p>
             <section className="mb-4">
               <FormLine
                 id="orgName"
                 {...register("orgName")}
-                title="Account Name"
+                title="Organization Name"
                 placeholder="Group A"
                 error={errors.orgName?.message}
                 required
@@ -331,7 +333,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
                 id="orgDescription"
                 {...register("orgDescription")}
                 defaultValue={getValues("orgDescription")}
-                title="Account Description"
+                title="Description"
                 placeholder="Enter description of organization"
                 error={errors.orgDescription?.message}
                 rows={5}
@@ -369,7 +371,7 @@ const ProfileForm = ({ session }: SettingsInterface) => {
                     />
                   )}
                 </div>
-                {/* Profile Image input */}
+                Profile Image input
                 <input
                   title="image"
                   type="file"
@@ -387,14 +389,14 @@ const ProfileForm = ({ session }: SettingsInterface) => {
                 id="orgMeta"
                 {...register("orgMeta")}
                 defaultValue={getValues("orgMeta")}
-                title="Account Bio"
+                title="Meta Data"
                 placeholder="Enter metadata here"
                 error={errors.orgMeta?.message}
                 rows={5}
               />
             </section>
           </div>
-        </div>
+        </div> */}
         <div className="flex justify-start">
           <button
             type="submit"

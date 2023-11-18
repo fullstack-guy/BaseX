@@ -24,6 +24,19 @@
   * {
     @apply border-foreground/20;
   }
+  h1 {
+    @apply text-gray-700 text-2xl;
+  }
+  h2,
+  h3 {
+    @apply text-gray-700 text-lg;
+  }
+  .box-wrap {
+    @apply bg-white md:py-2 px-4 mb-4 shadow-md;
+  }
+  .section-header {
+    @apply md:py-2 px-4 mb-2;
+  }
 }
 
 .animate-in {
