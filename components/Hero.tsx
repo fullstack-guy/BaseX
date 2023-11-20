@@ -1,5 +1,5 @@
 import NextLogo from "./NextLogo";
-import SupabaseLogo from "./SupabaseLogo";
+// import SupabaseLogo from "./SupabaseLogo";
 
 export default function Hero() {
   return (
@@ -10,7 +10,7 @@ export default function Hero() {
           target="_blank"
           rel="noreferrer"
         >
-          <SupabaseLogo />
+          {/* <SupabaseLogo /> */}
         </a>
         <span className="border-l rotate-45 h-6" />
         <a href="https://nextjs.org/" target="_blank" rel="noreferrer">

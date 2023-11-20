@@ -13,6 +13,7 @@ import { INITIAL_USER_DATA, UserInterface } from "@/app/types/user";
 import { INITIAL_ORG_DATA, OrgInterface } from "@/app/types/organization";
 import { supabaseStorageUrl } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
+import { FaCircleInfo, FaAt, FaCheck } from "react-icons/fa6";
 
 interface ProfileFormData {
   name: string;
@@ -229,131 +230,100 @@ const ProfileForm = ({ session }: SettingsInterface) => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className="pb-5">
-          heading
-          <div className="pb-12">
-            <h1 className="font-bold">User Profile</h1>
-            <p className="text-gray-400 mt-2">
-              View and update your account details, profile, and more.
-            </p>
-          </div>
-          <div className="bg-white rounded-lg shadow pt-6 pb-3 px-8 mb-6">
-            <section className="flex flex-col md:flex-row justify-between ">
-              <div className="w-full md:w-[50%]">
-                <span className="block text-secondary mb-2">
-                  Profile Image
-                  <span className="text-[0.65rem] font-regular text-gray-400 mx-4">
-                    320px x 320px
-                  </span>
-                </span>
-                <div
-                  className="w-40 h-40 bg-gray-200 rounded-full my-4 cursor-pointer"
-                  onClick={() => profileImageInputRef?.current?.click()}
-                >
-                  {profileImageSrc && (
-                    <Image
-                      src={profileImageSrc}
-                      alt="Profile"
-                      width={150}
-                      height={150}
-                      className="w-40 h-40 rounded-full"
-                    />
-                  )}
-                </div>
-                Profile Image input
-                <input
-                  title="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleProfileImageChange}
-                  className="hidden"
-                  ref={profileImageInputRef}
-                />
-              </div>
-            </section>
-            <section className="mb-4">
-              <FormLine
-                id="displayName"
-                {...register("name")}
-                title="Name"
-                placeholder="Ex. John Doe"
-                error={errors.name?.message}
-              />
-            </section>
-            <section className="mb-4">
-              <FormLine
-                id="username"
-                {...register("username")}
-                title="Username"
-                placeholder="Enter username"
-                error={errors.username?.message}
-                required
-              />
-            </section>
-            <section className="mb-4">
-              <FormTextArea
-                maxLength={250}
-                id="bio"
-                {...register("bio")}
-                defaultValue={getValues("bio")}
-                title="Bio"
-                placeholder="Enter description of yourself"
-                error={errors.bio?.message}
-                rows={5}
-              />
-            </section>
-          </div>
-        </div> */}
-
-        <div className="bg-white rounded-lg shadow pt-6 pb-3 px-8 mb-6">
+    <>
+      <section className="max-w-3xl mx-auto">
+        {/* heading */}
+        <div className="pb-8">
           <h1 className="font-bold">Account Settings</h1>
-          <div className="pb-5">
-            <p className="text-gray-400 mt-2">
-              {orgData.id
-                ? "View and update your account details, profile, and more."
-                : "Please create a new profile here"}
-            </p>
-            <section className="mb-4">
-              <FormLine
-                id="orgName"
-                {...register("orgName")}
-                title="Account Name"
-                placeholder="Group A"
-                error={errors.orgName?.message}
-                required
-              />
-            </section>
-            <section className="mb-4">
-              <FormTextArea
-                maxLength={250}
-                id="orgDescription"
-                {...register("orgDescription")}
-                defaultValue={getValues("orgDescription")}
-                title="Account Description"
-                placeholder="Enter description of organization"
-                error={errors.orgDescription?.message}
-                rows={5}
-              />
-            </section>
-            <section className="mb-4">
-              <FormLine
-                id="orgHandle"
-                {...register("orgHandle")}
-                title="Handle"
-                placeholder="Enter handle here"
-                error={errors.orgHandle?.message}
-                required
-              />
-            </section>
-            <section className="flex flex-col md:flex-row justify-between mb-4">
-              <div className="w-full md:w-[50%]">
-                <span className="block text-secondary font-semibold mb-2">
-                  Organization Image
-                  <span className="text-[0.65rem] font-regular text-gray-400 mx-4">
-                    320px x 320px
+          <p className="text-gray-400 mt-2">
+            View and update your account details.
+          </p>
+        </div>
+
+        {/* Basic Info */}
+        <div className="bg-white rounded-lg shadow pt-6 pb-3 mb-6">
+          <div className="grid grid-col-1 md:grid-cols-3 px-8 pb-4">
+            <div className="md:col-span-2 mr-5">
+              <div className="mb-3 items-center py-4">
+                <div className="px-3 pb-1.5 pt-2.5 focus-within:ring-2 focus-within:ring-purple-200 shadow-inner border border-gray-200 bg-white rounded text-gray-600 outline-none focus:ring-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-xs font-medium text-gray-500 pb-1"
+                  >
+                    Account Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block w-full p-0 text-gray-400 placeholder:text-gray-400 border-0 focus:ring-0 outline-none sm:text-sm sm:leading-6"
+                    placeholder="Ex. John Doe"
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+
+              <hr className="bg-gray-200 block h-[1px] my-2 px-8 mb-4" />
+
+              <div className="mb-3 items-center py-4">
+                <div className="relative px-3 pb-1.5 pt-2.5 focus-within:ring-2 focus-within:ring-purple-200 shadow-inner border border-gray-200 bg-white rounded text-gray-600 outline-none focus:ring-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-xs font-medium text-gray-500 pb-1"
+                  >
+                    Account Handle
+                    <span className="inline-flex items-center justify-center h-4 w-4 ml-1 text-gray-400">
+                      <FaCircleInfo />
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    name="handle"
+                    className="block w-full border-0 py-0 px-5 text-gray-400 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 outline-none"
+                    placeholder="Enter Handle"
+                    defaultValue=""
+                  />
+                  <span className="inline-flex text-gray-500 items-center justify-center h-[2.25em] w-[2.25em] absolute left-0 bottom-0">
+                    <FaAt />
                   </span>
+                  <div className="inline-flex items-center justify-center h-[2.5em] w-[2.5em] absolute right-0 bottom-0">
+                    <FaCheck className="text-green-500" />
+                    {/* TODO add the commented out logic below: */}
+                    {/* {formStatus ? <FaCheck className="text-green-500"/> : <FaBan className="text-red-500"/>} */}
+                  </div>
+                </div>
+              </div>
+
+              <hr className="bg-gray-200 block h-[1px] my-2 px-8 mb-4" />
+
+              <div className="mb-3 items-center py-4">
+                <div className="px-3 pb-1.5 pt-2.5 focus-within:ring-2 focus-within:ring-purple-200 shadow-inner border border-gray-200 bg-white rounded text-gray-600 outline-none focus:ring-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-xs font-medium text-gray-500 pb-1"
+                  >
+                    Account Description
+                    <span className="inline-flex items-center justify-center h-4 w-4 ml-1 text-gray-400">
+                      <FaCircleInfo />
+                    </span>
+                  </label>
+                  <textarea
+                    name="bio"
+                    className="block w-full border-0 p-0 text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 outline-none"
+                    placeholder="Enter Description Here"
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="md:col-span-1 py-5 flex flex-col  items-center">
+              {/* <ImageUpload organization={accountData} /> */}
+              <div className="w-full flex flex-col items-center">
+                <span className="block text-secondary font-semibold mb-2">
+                  Account Image
+                </span>
+                <span className="text-[0.65rem] font-regular text-gray-400">
+                  320px x 320px
                 </span>
                 <div
                   className="w-40 h-40 bg-gray-200 rounded-full my-4 cursor-pointer"
@@ -374,44 +344,22 @@ const ProfileForm = ({ session }: SettingsInterface) => {
                   title="image"
                   type="file"
                   accept="image/*"
-                  onChange={handleOrgImageChange}
+                  onChange={handleProfileImageChange}
                   className="hidden"
-                  ref={orgImageInputRef}
+                  ref={profileImageInputRef}
                 />
               </div>
-            </section>
-
-            <section className="mb-4">
-              <FormTextArea
-                maxLength={250}
-                id="orgMeta"
-                {...register("orgMeta")}
-                defaultValue={getValues("orgMeta")}
-                title="Account Bio"
-                placeholder="Enter metadata here"
-                error={errors.orgMeta?.message}
-                rows={5}
-              />
-            </section>
+            </div>
           </div>
         </div>
-        <div className="flex justify-start">
-          <button
-            type="submit"
-            disabled={isSaving}
-            className={classNames(
-              "py-2 px-5 rounded-full  text-white hover:shadow-md",
-              {
-                "bg-sky-700": !isSaving,
-                "bg-gray-700 cursor-not-allowed": isSaving,
-              }
-            )}
-          >
-            {isSaving ? "Saving" : "Save"}
+
+        <div className="flex justify-end">
+          <button className="mt-3 inline-flex items-center justify-center px-4 py-2 font-medium text-center text-md bg-purple-900 text-white rounded-md hover:bg-[#5616de] hover:text-white focus:ring-4 focus:ring-purple-300">
+            Update
           </button>
         </div>
-      </form>
-    </div>
+      </section>
+    </>
   );
 };
 
