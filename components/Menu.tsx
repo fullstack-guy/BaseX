@@ -18,7 +18,7 @@ function UserMenu() {
         Dashboard
       </a>
       <a
-        href="/dashboard/settings"
+        href="/account/settings"
         className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none transition duration-150 ease-in-out"
       >
         Settings

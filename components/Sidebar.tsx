@@ -13,11 +13,10 @@ import {
   LuBell,
 } from "react-icons/lu";
 import { PiHouseSimpleBold } from "react-icons/pi";
-import Search from "@/components/Search";
 
 const navigation = [
   {
-    name: "Dashboard Home",
+    name: "Dashboard",
     href: "/dashboard",
     icon: PiHouseSimpleBold,
     current: true,
@@ -134,9 +133,7 @@ export default function RootLayout({
                                 </a>
                               </li>
                             ))}
-                            <li>
-                              <Search />
-                            </li>
+                            <li></li>
                           </ul>
                         </li>
                         <li>
@@ -233,9 +230,7 @@ export default function RootLayout({
                         </a>
                       </li>
                     ))}
-                    <li>
-                      <Search />
-                    </li>
+                    <li></li>
                   </ul>
                 </li>
                 <li>
@@ -270,18 +265,6 @@ export default function RootLayout({
                   </ul>
                 </li>
                 <li className="-mx-6 mt-auto p-2">
-                  <a
-                    href="/dashboard/settings"
-                    className="flex items-center gap-x-3 p-2 mb-3 rounded-md text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
-                  >
-                    <LuSettings
-                      className="h-5 w-5 shrink-0 text-gray-400 group-hover:text-accent"
-                      aria-hidden="true"
-                    />
-                    <div className="flex items-center gap-x-4">
-                      Account Settings
-                    </div>
-                  </a>
                   <div className="gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-900">
                     {children}
                   </div>

@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import Brand from "../components/Brand";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
 import Hero from "@/components/Hero";
 import { Head } from "next/document";
 import Header from "@/components/Header";
@@ -26,7 +25,6 @@ export default async function Index() {
         <Hero />
         <main className="flex-1 flex flex-col gap-6">
           <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          <ConnectSupabaseSteps />
         </main>
       </div>
 
@@ -34,16 +32,3 @@ export default async function Index() {
     </div>
   );
 }
-
-// user_metadata: {
-//   avatar_url: 'https://lh3.googleusercontent.com/a/ACg8ocJVoepOXjg2M4XAlCthjkNobZ2R8qZR4tymyWAiK7mkAEE=s96-c',
-//   custom_claims: { hd: 'sonicloop.net' },
-//   email: 'tennyson@sonicloop.net',
-//   email_verified: true,
-//   full_name: 'Tennyson Preston',
-//   iss: 'https://accounts.google.com',
-//   name: 'Tennyson Preston',
-//   picture: 'https://lh3.googleusercontent.com/a/ACg8ocJVoepOXjg2M4XAlCthjkNobZ2R8qZR4tymyWAiK7mkAEE=s96-c',
-//   provider_id: '100371691896886518380',
-//   sub: '100371691896886518380'
-// },
