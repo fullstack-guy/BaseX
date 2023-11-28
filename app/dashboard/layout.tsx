@@ -4,6 +4,7 @@ import AuthButton from "@/components/AuthButton";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
+import useServerAuth from "@/utils/useServerAuth";
 // import { useState } from "react";
 
 export default async function RootLayout({
@@ -12,12 +13,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-
   const supabase = createClient(cookieStore);
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await useServerAuth();
 
   if (user?.id) {
     let { data, error } = await supabase.rpc("check_if_org_exist_for_user", {
